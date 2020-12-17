@@ -39,9 +39,10 @@ Create an empty game object in the scene where you want to play music, and add M
   The above note plays the C major code because it plays the do,mi,sol at once.
   
   NT is the enum type variable defined as follows:
-  public enum NT
-  {
-    EMPTY,
+  
+         public enum NT
+          {
+            EMPTY,
     C1, Db1, D1, Eb1, E1, F1, Gb1, G1, Ab1, A1, Bb1, B1,
     C2, Db2, D2, Eb2, E2, F2, Gb2, G2, Ab2, A2, Bb2, B2,
     C3, Db3, D3, Eb3, E3, F3, Gb3, G3, Ab3, A3, Bb3, B3,
@@ -50,24 +51,24 @@ Create an empty game object in the scene where you want to play music, and add M
     C6, Db6, D6, Eb6, E6, F6, Gb6, G6, Ab6, A6, Bb6, B6,
     C7, Db7, D7, Eb7, E7, F7, Gb7, G7, Ab7, A7, Bb7, B7,
     Length
-  }
+         }
   
 ## (2)Once you've made multiple notes, use them to create tracks.
   There can be multiple tracks, to play the same note using different instruments.
   First, I will make only one track.
   
-  Track track = new Track();
-  track.SetNotes(new Notes[] {CM,E,E,E,F,F,E,CM,E,E,F,CM});
+         Track track = new Track();
+         track.SetNotes(new Notes[] {CM,E,E,E,F,F,E,CM,E,E,F,CM});
   
   The above track plays {CM,E,E,E,F,F,E,CM,E,E,F,CM} in order at intervals of 0.5 seconds.
   The notes used at this time can be defined as follows:
   
-  Notes CM = new Notes();
-  CM.SetPitch(new int[]{(int)NT.C2,(int)NT.E2,(int)NT.G2});
-  Notes E = new Notes();
-  E.SetPitch(new int[] {(int)NT.E2});
-  Notes F = new Notes();
-  F.SetPitch(new int[] { (int)NT.F2 });
+         Notes CM = new Notes();
+         CM.SetPitch(new int[]{(int)NT.C2,(int)NT.E2,(int)NT.G2});
+         Notes E = new Notes();
+          E.SetPitch(new int[] {(int)NT.E2});
+          Notes F = new Notes();
+        F.SetPitch(new int[] { (int)NT.F2 });
   
 ## (3)The track must contain information about which instruments to play.
    We load this information using a class called Sound Font.
@@ -89,12 +90,12 @@ Create an empty game object in the scene where you want to play music, and add M
  ## (4)Put the track in the list.
  Since there can be multiple tracks, the tracks must be contained in the list object, even if you plan to play a single track.
  
- List<Track> tracks = new List<Track>();
- tracks.Add(track);
+         List<Track> tracks = new List<Track>();
+         tracks.Add(track);
   
 ## (5)Put the track list object you have created into Music.
-Music music = new Music();
-music.SetTracks(tracks);
+        Music music = new Music();
+        music.SetTracks(tracks);
 
 Music class simply have track list objects as member variables.
 This is to allow you to modify the Music class to include various information.
