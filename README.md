@@ -25,7 +25,7 @@ Create an empty game object in the scene where you want to play music, and add M
 
 # 4. Bring the MusicPlayer component that was attached to the empty game object above, and then play Music.
 
-        MusicPlayer m = gameObject.GoetComponent<MusicPlayer>();
+        MusicPlayer m = gameObject.GetComponent<MusicPlayer>();
         Music music = new Music();//The instructions for configuring the Music class are described below.
         m.init(music);
         m.play();
