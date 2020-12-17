@@ -25,7 +25,7 @@
 
 # 4. 위에서 붙인 MusicPlayer 컴포넌트를 가져와서 음악을 재생하세요.
 
-        MusicPlayer m = gameObject.GoetComponent<MusicPlayer>();
+        MusicPlayer m = gameObject.GetComponent<MusicPlayer>();
         Music music = new Music();//재생할 음악의 정보가 담긴 Music 클래스의 구성방법에 대해서는 아래에서 더욱 자세히 설명합니다.
         m.init(music);
         m.play();
