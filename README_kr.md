@@ -32,10 +32,10 @@
         m.play();
         
 # 5. Music 클래스는 아래와 같은 방법으로 사용할 수 있습니다.
-## (1)Notes를 먼저 만드세요
+## (1)Note를 먼저 만드세요
   unityMusicPlayer는 0.5초마다 노트를 재생합니다. 노트는 동시에 연주하고 싶은 음을 의미합니다.
   
-  Notes CM = new Notes();
+  Note CM = new Note();
   CM.SetPitch(new int[]{(int)NT.C2,(int)NT.E2,(int)NT.G2});
   
   위의 노트는 도, 미, 솔을 동시에 연주하므로 C 메이저 코드를 의미합니다.
