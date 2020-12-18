@@ -34,9 +34,9 @@ Create an empty game object in the scene where you want to play music, and add M
         m.play();
 # 5. Music class can be used as below.
 ## (1)Create a note first.
-  This player will play the music every 0.5 seconds. Notes means the sound that you want to play at once.
+  This player will play the music every 0.5 seconds. Note means the sound that you want to play at once.
   
-  Notes CM = new Notes();
+  Note CM = new Note();
   CM.SetPitch(new int[]{(int)NT.C2,(int)NT.E2,(int)NT.G2});
   
   The above note plays the C major code because it plays the do,mi,sol at once.
