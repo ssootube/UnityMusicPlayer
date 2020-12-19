@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -12,9 +12,9 @@ public class Music
 
 public class Track
 {
-    private Notes[] notes;
+    private Note[] notes;
     private SoundFont soundFont = new SoundFont();
-    public void SetNotes(Notes[] var) { notes = var; }
+    public void SetNotes(Note[] var) { notes = var; }
     public void SetSoundFont(Pair<string, int>[] srcs) {
         for (int i = 0; i < srcs.Length; ++i)
         {
@@ -22,7 +22,7 @@ public class Track
             soundFont.importSrc(srcs[i].First, srcs[i].Second);
         }
     }
-    public Notes[] GetNotes() { return (notes); }
+    public Note[] GetNotes() { return (notes); }
     public SoundFont GetSoundFont() { return (soundFont); }
     public void initSoundFont()
     {
@@ -30,7 +30,7 @@ public class Track
     }
 }
 
-public class Notes
+public class Note
 {
     private int[] pitch;
     public void SetPitch(int[] arr) { pitch = arr; }
@@ -73,7 +73,7 @@ public class SoundFont
     {
         original.Add(new SoundSample((AudioClip)Resources.Load(name), pitch));
     }
-    public void play(AudioSource player, int pitch)
+    public void play(ref AudioSource player, int pitch)
     {
         if (pitch != (int)NT.EMPTY)
         {
