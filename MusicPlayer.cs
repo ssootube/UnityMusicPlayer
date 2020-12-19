@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -20,24 +20,38 @@ public class MusicPlayer : MonoBehaviour
 {
     private Music music;
     private int trackCount;
-    private float tickTime = 0.5f;
+    private float tickTime = 0.25f;
     private float musicLength;
     private IEnumerator player;
-    public List<GameObject> musicPlayers;
+    public GameObject musicPlayer;
+    public AudioSource[] speakers;
+    public int maxSpeakers;
+    private int global_idx;
 
     public void init(Music _music)
     {
         this.music = _music;
         trackCount = music.GetTracks().Count;
         musicLength = music.GetTracks()[0].GetNotes().Length;
-        for (int i = 0; i < trackCount; ++i)
+        maxSpeakers = 0;
+        for (int i = 0; i < musicLength; ++i)
         {
-            GameObject temp = new GameObject("MusicPlayer");
-            musicPlayers.Add(temp);
-            for (int j = 0; j < (int)NT.Length - 1; ++j)
-                temp.AddComponent<AudioSource>();
-            music.GetTracks()[i].initSoundFont();
+            int sum = 0;
+            for (int j = 0; j < trackCount; ++j)
+                sum += music.GetTracks()[j].GetNotes()[i].GetPitch().Length;
+            maxSpeakers = maxSpeakers < sum ? sum : maxSpeakers;
         }
+        maxSpeakers *= 2;
+        musicPlayer = new GameObject("MusicPlayer");
+        for(int i = (speakers == null ? 0 : speakers.Length); i < maxSpeakers; ++i)
+            musicPlayer.AddComponent<AudioSource>();
+        speakers = musicPlayer.GetComponentsInChildren<AudioSource>();
+        if (speakers.Length > maxSpeakers)
+            for (int i = speakers.Length - 1; i >= maxSpeakers; --i)
+                Destroy(speakers[i]);
+        for (int i = 0; i < trackCount; ++i)
+            music.GetTracks()[i].initSoundFont();
+
         player = tick();
     }
     public void play()
@@ -59,15 +73,23 @@ public class MusicPlayer : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(tickTime);
         for (int i = 0; i < musicLength; ++i)
         {
+            global_idx = 0;
             for (int j = 0; j < trackCount; ++j)
             {
+                while (speakers[global_idx].isPlaying)
+                {
+                    global_idx++;
+                    if(global_idx >= maxSpeakers)
+                    {
+                        musicPlayer.AddComponent<AudioSource>();
+                        speakers = musicPlayer.GetComponentsInChildren<AudioSource>();
+                        maxSpeakers++;
+                    }
+                }
                 Track temp = music.GetTracks()[j];
                 int[] pitch = temp.GetNotes()[i].GetPitch();
                 for(int k = 0; k < pitch.Length; ++k)
-                {
-                    AudioSource[] players = musicPlayers[j].GetComponentsInChildren<AudioSource>();
-                    temp.GetSoundFont().play(players[pitch[k]], pitch[k]);
-                }
+                    temp.GetSoundFont().play(ref speakers[global_idx++], pitch[k]);
             }
             yield return waitForSeconds;
         }
